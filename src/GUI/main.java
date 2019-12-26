@@ -50,7 +50,7 @@ public class main {
     }
 
     private static void add() {
-        model.addRow(new Object[]{Boolean.FALSE,null,null,null});
+
     }
 
     private static void del() {
@@ -104,27 +104,31 @@ public class main {
 
     //load data into model
     public static void loadData(DefaultTableModel model) {
-        List<PhanCongDTO> lsPhanCong = phanCongBUS.getData();
-        Object[] rowData = new Object[9]; // init data rows
+        try {
+            List<PhanCongDTO> lsPhanCong = phanCongBUS.getData();
+            Object[] rowData = new Object[9]; // init data rows
 
-        for (int i = 0; i < lsPhanCong.size(); i++) {
-            rowData[0] = i + 1;
-            System.out.println("\t" + rowData[0]);
-            rowData[1] = lsPhanCong.get(i).getMaLop();
-            rowData[2] = lsPhanCong.get(i).getTenMonHoc();
-            rowData[3] = lsPhanCong.get(i).getNgayThi();
-            rowData[4] = lsPhanCong.get(i).getCaThi();
-            rowData[5] = lsPhanCong.get(i).getPhongThi();
-            rowData[6] = lsPhanCong.get(i).getSoSV();
-            rowData[7] = lsPhanCong.get(i).getSoCBCT();
-            if (isReach(lsPhanCong.get(i).getSoSV(), lsPhanCong.get(i).getSoCBCT())) {
-                rowData[8] = "Đạt";
-            } else {
-                rowData[8] = "Không đạt";
+            for (int i = 0; i < lsPhanCong.size(); i++) {
+                rowData[0] = i + 1;
+                rowData[1] = lsPhanCong.get(i).getMaLop();
+                rowData[2] = lsPhanCong.get(i).getTenMonHoc();
+                rowData[3] = lsPhanCong.get(i).getNgayThi();
+                rowData[4] = lsPhanCong.get(i).getCaThi();
+                rowData[5] = lsPhanCong.get(i).getPhongThi();
+                rowData[6] = lsPhanCong.get(i).getSoSV();
+                rowData[7] = lsPhanCong.get(i).getSoCBCT();
+                if (isReach(lsPhanCong.get(i).getSoSV(), lsPhanCong.get(i).getSoCBCT())) {
+                    rowData[8] = "Đạt";
+                } else {
+                    rowData[8] = "Không đạt";
+                }
+                model.addRow(rowData);
             }
-            model.addRow(rowData);
         }
-        System.out.println("finish 1 time load");
+        catch (NullPointerException ex){
+            JOptionPane.showMessageDialog(null, "Phần tử trong db bị trống");
+        }
+
     }
 
     // to check room is okay
