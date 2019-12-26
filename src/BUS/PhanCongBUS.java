@@ -21,4 +21,7 @@ public class PhanCongBUS {
     public boolean isDel ( int ct, String pt){
         return phanCongDAL.isDel(ct, pt);
     }
+    public boolean isAdd(PhanCongDTO phanCongDTO){
+        return phanCongDAL.isAdd(phanCongDTO);
+    }
 }

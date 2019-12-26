@@ -54,17 +54,22 @@ public class main {
     }
 
     private static void del() {
-        String phongThi;
-        int caThi;
-        caThi = Integer.parseInt(model.getValueAt(table.getSelectedRow(), 4).toString());
-        phongThi = model.getValueAt(table.getSelectedRow(), 5).toString();
-        if(phanCongBUS.isDel(caThi, phongThi)){
-            JOptionPane.showMessageDialog(null, "Xóa thành công");
-            removeAllItem(model);
-            loadData(model);
+        String phongThi = null;
+        int caThi = -1;
+        try {
+            caThi = Integer.parseInt(model.getValueAt(table.getSelectedRow(), 4).toString());
+            phongThi = model.getValueAt(table.getSelectedRow(), 5).toString();
+            if(phanCongBUS.isDel(caThi, phongThi)){
+                JOptionPane.showMessageDialog(null, "Xóa thành công");
+                removeAllItem(model);
+                loadData(model);
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "Xóa thất bại");
+            }
         }
-        else {
-            JOptionPane.showMessageDialog(null, "Xóa thất bại");
+        catch (IndexOutOfBoundsException e){
+            JOptionPane.showMessageDialog(null, "Bạn chưa chọn dòng cần xóa");
         }
 
     }

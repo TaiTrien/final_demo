@@ -2,10 +2,7 @@ package DAL;
 
 import DTO.PhanCongDTO;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,18 +56,26 @@ public class PhanCongDAL {
         return true;
     }
 
-    // to add record from db
-//    public boolean isAdd(PhanCongDTO phanCongDTO) {
-//        InitConnection connection = new InitConnection();
-//        Connection cnt = connection.InitConnection();
-//
-//        try {
-//            statement = cnt.createStatement();
-//            statement.executeUpdate("DELETE FROM PHANCONG WHERE caThi = " + ct + " AND phongThi = '" + pt + "'");
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            return false;
-//        }
-//        return true;
-//    }
+     // to add record from db
+    public boolean isAdd(PhanCongDTO phanCongDTO) {
+        InitConnection connection = new InitConnection();
+        Connection cnt = connection.InitConnection();
+
+        try {
+            String insertQuery = "INSERT INTO PHANCONG VALUES (?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement pst = cnt.prepareStatement(insertQuery);
+            pst.setString(1, phanCongDTO.getMaLop());
+            pst.setString(2, phanCongDTO.getTenMonHoc());
+            pst.setDate(3, (Date) phanCongDTO.getNgayThi());
+            pst.setInt(4, phanCongDTO.getCaThi());
+            pst.setString(5, phanCongDTO.getPhongThi());
+            pst.setInt(6, phanCongDTO.getSoSV());
+            pst.setInt(7, phanCongDTO.getSoCBCT());
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 }
