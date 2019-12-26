@@ -1,0 +1,49 @@
+﻿USE [master]
+GO
+
+WHILE EXISTS(select NULL from sys.databases where name='QLPT')
+BEGIN
+    DECLARE @SQL varchar(max)
+    SELECT @SQL = COALESCE(@SQL,'') + 'Kill ' + Convert(varchar, SPId) + ';'
+    FROM MASTER..SysProcesses
+    WHERE DBId = DB_ID(N'QLPT') AND SPId <> @@SPId
+    EXEC(@SQL)
+    DROP DATABASE [QLPT]
+END
+GO
+
+/* Collation = SQL_Latin1_General_CP1_CI_AS */
+CREATE DATABASE [QLPT]
+GO
+USE [QLPT]
+GO
+
+CREATE TABLE PHANCONG(
+maLop nvarchar (15) NOT NULL,
+tenMonHoc nvarchar (30) NOT NULL,
+ngayThi smalldatetime NOT NULL,
+caThi int NOT NULL,
+phongThi nvarchar(5) NOT NULL,
+soSV int NOT NULL,
+soCBCT int NOT NULL,
+)
+
+INSERT INTO PHANCONG VALUES('SE214.I11',N'Công nghệ phần mềm chuyên sâu','2019-01-02',1,'C113',48,2)
+INSERT INTO PHANCONG VALUES('SE327.I11',N'Phát triển và vận hành game','2019-01-02',1,'C208',13,2)
+INSERT INTO PHANCONG VALUES('SE108.I11',N'Kiểm chứng phần mềm','2019-01-08',3,'C114',42,2)
+INSERT INTO PHANCONG VALUES('SE108.I11',N'Kiểm chứng phần mềm','2019-01-08',3,'C205',42,2)
+INSERT INTO PHANCONG VALUES('SE108.I11.PMCL',N'Kiểm chứng phần mềm','2019-01-08',3,'E22',22,2)
+INSERT INTO PHANCONG VALUES('SE108.I12',N'Kiểm chứng phần mềm','2019-01-08',3,'C206',39,2)
+INSERT INTO PHANCONG VALUES('SE108.I12.PMCL',N'Kiểm chứng phần mềm','2019-01-08',3,'E24',26,2)
+INSERT INTO PHANCONG VALUES('SE104.I11',N'Nhập môn Công nghệ phần mềm','2019-01-09',3,'C305',64,3)
+INSERT INTO PHANCONG VALUES('SE104.I12',N'Nhập môn Công nghệ phần mềm','2019-01-09',3,'C306',54,2)
+INSERT INTO PHANCONG VALUES('SE215.I11',N'Giao tiếp người máy','2019-01-10',3,'C114',54,2)
+INSERT INTO PHANCONG VALUES('SE215.I11.PMCL',N'Giao tiếp người máy','2019-01-10',3,'C101',22,2)
+INSERT INTO PHANCONG VALUES('SE215.I11.PMCL',N'Giao tiếp người máy','2019-01-10',3,'C201',21,2)
+INSERT INTO PHANCONG VALUES('SE215.I12',N'Giao tiếp người máy','2019-01-10',3,'C205',75,2)
+INSERT INTO PHANCONG VALUES('IT002.I11',N'Lập trình hướng đối tượng','2019-01-12',2,'C305',40,2)
+INSERT INTO PHANCONG VALUES('IT002.I11',N'Lập trình hướng đối tượng','2019-01-12',2,'C306',40,2)
+INSERT INTO PHANCONG VALUES('IT002.I12',N'Lập trình hướng đối tượng','2019-01-12',2,'C308',66,3)
+INSERT INTO PHANCONG VALUES('IT002.I13',N'Lập trình hướng đối tượng','2019-01-12',2,'C311',50,2)
+INSERT INTO PHANCONG VALUES('SE330.I11.PMCL',N'Ngôn ngữ lập trình Java','2019-01-18',3,'C201',21,2)
+

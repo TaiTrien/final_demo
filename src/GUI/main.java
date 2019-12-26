@@ -38,9 +38,19 @@ public class main {
                 del();
             }
         });
+        btnAdd.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                add();
+            }
+        });
 
         // set the model to the table
         table.setModel(model);
+    }
+
+    private static void add() {
+        model.addRow(new Object[]{Boolean.FALSE,null,null,null});
     }
 
     private static void del() {
